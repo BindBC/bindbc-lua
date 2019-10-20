@@ -1,0 +1,32 @@
+name "bindbc-lua"
+description "Dynamic and static bindings to Lua 5.1 and later, compatible with -betterC, @nogc, and nothrow."
+homepage ""
+authors "Mike Parker"
+license "Boost"
+
+targetType "staticLibrary"
+targetPath "lib"
+targetName "BindBC_Lua"
+
+configuration "dynamic" {
+    versions "BindLua_Dynamic"
+    dependency "bindbc-loader" version="~>0.2.1"
+}
+
+configuration "dynamicBC" {
+    versions "BindLua_Dynamic"
+    dependency "bindbc-loader" version="~>0.2.1"
+    subConfiguration "bindbc-loader" "yesBC"
+    dflags "-betterC"
+}
+
+configuration "static" {
+    versions "BindLua_Static"
+    excludedSourceFiles "source/bindbc/lua/v51/binddynamic.d" "source/bindbc/lua/v52/binddynamic.d" "source/bindbc/lua/v53/binddynamic.d"
+}
+
+configuration "staticBC" {
+    dflags "-betterC"
+    versions "BindLua_Static"
+    excludedSourceFiles "source/bindbc/lua/v51/binddynamic.d" "source/bindbc/lua/v52/binddynamic.d" "source/bindbc/lua/v53/binddynamic.d"
+}
