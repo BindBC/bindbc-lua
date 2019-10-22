@@ -523,5 +523,5 @@ LuaSupport loadLua(const(char)* libName)
     lib.bindSymbol(cast(void**)&luaopen_package, "luaopen_package");
     lib.bindSymbol(cast(void**)&luaL_openlibs, "luaL_openlibs");
 
-    return LuaSupport.lua52;
+    return LuaSupport.lua53;
 }
