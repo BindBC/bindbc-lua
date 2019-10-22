@@ -345,15 +345,15 @@ bool isLuaLoaded() @safe { return lib != invalidHandle; }
 LuaSupport loadLua()
 {
     version(Windows) {
-        const(char)[][3] libNames = ["lua5.2.dll", "lua52.dll", "lua5.2.4.dll"];
+        const(char)[][3] libNames = ["lua5.3.dll", "lua53.dll", "lua5.3.5.dll"];
     }
     else version(OSX) {
-        const(char)[][1] libNames = "liblua.5.2.dylib";
+        const(char)[][1] libNames = "liblua.5.3.dylib";
     }
     else version(Posix) {
-        const(char)[][1] libNames = "liblua.so.5.2";
+        const(char)[][1] libNames = "liblua.so.5.3";
     }
-    else static assert(0, "bindbc-lua support for Lua 5.2 is not implemented on this platform.");
+    else static assert(0, "bindbc-lua support for Lua 5.3 is not implemented on this platform.");
 
     LuaSupport ret;
     foreach(name; libNames) {
