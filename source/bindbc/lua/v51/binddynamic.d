@@ -309,7 +309,7 @@ LuaSupport loadLua()
         const(char)[][1] libNames = "liblua.5.1.dylib";
     }
     else version(Posix) {
-        const(char)[][1] libNames = ["liblua.so.5.1", "liblua5.1.so", "liblua-5.1.so"];
+        const(char)[][3] libNames = ["liblua.so.5.1", "liblua5.1.so", "liblua-5.1.so"];
     }
     else static assert(0, "bindbc-lua support for Lua 5.1 is not implemented on this platform.");
 
