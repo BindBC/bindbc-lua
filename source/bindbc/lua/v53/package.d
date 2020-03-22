@@ -137,12 +137,12 @@ alias lua_objlen = lua_rawlen;
         return cast(int)luaL_optinteger(L, a, d);
     }
 
-    c_long luaL_checklong(lua_State* L, int a, int d) {
+    c_long luaL_checklong(lua_State* L, int a) {
         pragma(inline, true)
         return cast(c_long)luaL_checkinteger(L, a);
     }
 
-    c_long luaL_checklong(lua_State* L, int a, int d) {
+    c_long luaL_optlong(lua_State* L, int a, int d) {
         pragma(inline, true)
         return cast(c_long)luaL_optinteger(L, a, d);
     }
