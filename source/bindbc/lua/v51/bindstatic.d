@@ -124,7 +124,7 @@ extern(C) @nogc nothrow:
     lua_Alloc lua_getallocf(lua_State*,void**);
     void lua_setallocf(lua_State*,lua_Alloc,void*);
     void lua_setlevel(lua_State*, lua_State*);
-    int lua_getstack(lua_State*,lua_Debug*);
+    int lua_getstack(lua_State*,int,lua_Debug*);
     int lua_getinfo(lua_State*,const(char)*,lua_Debug*);
     const(char)* lua_getlocal(lua_State*,const(lua_Debug)*,int);
     const(char)* lua_setlocal(lua_State*,const(lua_Debug)*,int);
