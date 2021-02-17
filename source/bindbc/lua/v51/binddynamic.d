@@ -94,7 +94,7 @@ extern(C) @nogc nothrow {
     alias plua_pushinteger = void function(lua_State* L, lua_Integer n);
     alias plua_pushlstring = void function(lua_State* L, const(char)* s, size_t l);
     alias plua_pushstring = void function(lua_State* L, const(char)* s);
-    alias plua_pushvfstring = const(char)* function(lua_State* L, const(char)* fmt, va_list);
+    alias plua_pushvfstring = const(char)* function(lua_State* L, const(char)* fmt, va_list argp);
     alias plua_pushfstring = const(char)* function(lua_State* L, const(char)* fmt, ...);
     alias plua_pushcclosure = void function(lua_State* L, lua_CFunction fn, int n);
     alias plua_pushboolean = void function(lua_State* L, int b);

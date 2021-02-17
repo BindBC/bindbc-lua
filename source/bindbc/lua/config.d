@@ -17,3 +17,9 @@ enum LuaSupport {
 version(LUA_51) {
     enum luaSupport = LuaSupport.lua51;
 }
+version(LUA_52) {
+    enum luaSupport = LuaSupport.lua52;
+}
+version(LUA_53) {
+    enum luaSupport = LuaSupport.lua53;
+}
