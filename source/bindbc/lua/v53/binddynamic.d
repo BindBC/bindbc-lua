@@ -130,7 +130,7 @@ extern(C) @nogc nothrow {
     alias plua_rawseti = void function(lua_State* L, int idx, lua_Integer n);
     alias plua_rawsetp = void function(lua_State* L, int idx, const(void)* p);
     alias plua_setmetatable = int function(lua_State* L, int objindex);
-    alias plua_setuservalue = void function(lua_State* L, int idx);
+    alias plua_setuservalue = int function(lua_State* L, int idx);
     alias plua_callk = void function(lua_State* L, int nargs, int nresults, lua_KContext ctx, lua_KFunction k);
     alias plua_pcallk = int function(lua_State* L, int nargs, int nresults, int errfunc, lua_KContext ctx, lua_KFunction k);
     alias plua_load = int function(lua_State* L, lua_Reader reader, void* dt, const(char)* chunkname, const(char)* mode);
