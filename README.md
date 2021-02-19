@@ -1,12 +1,12 @@
 # bindbc-lua
-This project provides both static and dynamic bindings to the C API of [Lua programming language](http://www.glfw.org/index.html). The bindings are `@nogc` and `nothrow` compatible and can be compiled for compatibility with `-betterC`. This package is intended as a replacement of [DerelictLua](https://github.com/DerelictOrg/DerelictLua), which is not compatible with `@nogc`,  `nothrow`, or `-betterC`.
+This project provides both static and dynamic bindings to the C API of [Lua programming language](https://www.lua.org/). The bindings are `@nogc` and `nothrow` compatible and can be compiled for compatibility with `-betterC`. This package is intended as a replacement of [DerelictLua](https://github.com/DerelictOrg/DerelictLua), which is not compatible with `@nogc`,  `nothrow`, or `-betterC`.
 
 ## Usage
 By default, `bindbc-lua` is configured to compile as a dynamic binding that is not `-betterC` compatible. The dynamic binding has no link-time dependency on the Lua library, so the Lua shared library must be manually loaded at runtime. When configured as a static binding, there is a link-time dependency on the lua library through either the static library or the appropriate file for linking with shared libraries on your platform (see below).
 
 When using DUB to manage your project, the static binding can be enabled via a DUB `subConfiguration` statement in your project's package file. `-betterC` compatibility is also enabled via subconfigurations.
 
-To use Lua, add `bindbc-lua` as a dependency to your project's package config file. For example, the following is configured to use Lua as a dynamic binding that is not `-betterC` compatible:
+To use Lua, add `bindbc-lua` as a dependency to your project's package config file. For example, the following is configured to use Lua as a dynamic binding that is not `-betterC` compatible (note that version `0.1.0` as used here is just an example; please use the latest version in real code):
 
 __dub.json__
 ```
@@ -30,7 +30,7 @@ To load the shared library, you need to call the `loadLua` function. This return
 * a member of `LuaSupport` indicating a version number that matches the version of Lua that `bindbc-lua` was configured at compile-time to load. Unlike other BindBC packages, which tend to load the lowest version of a library by default, `binbc-lua` __must__ be configured to load a specific version of the Lua library via a version identifier (see below). This value will match the global manifest constant, `luaSupport`.
 
 ```d
-import bindbc.glfw;
+import bindbc.lua;
 
 /*
 This version attempts to load the lua shared library using well-known variations
@@ -53,14 +53,14 @@ if(ret != luaSupport) {
     }
 }
 /*
-This version attempts to load the GLFW library using a user-supplied file name.
+This version attempts to load the Lua library using a user-supplied file name.
 Usually, the name and/or path used will be platform specific, as in this example
 which attempts to load `lua51.dll` from the `libs` subdirectory, relative
 to the executable, only on Windows.
 */
 // version(Windows) loadLua("libs/lua51.dll")
 ```
-Because of the number of changes to Lua's C API between releases, `bindbc-lua` does not attempt to load any version by default as there is no version of the API that is shared by all supported versions of Lua. A specific version of Lua must be specified via the `-version` compiler switch or the `versions` DUB directive with the desired Lua version number. In this example, the GLFW dynamic binding is compiled to support Lua 5.1:
+Because of the number of changes to Lua's C API between releases, `bindbc-lua` does not attempt to load any version by default as there is no version of the API that is shared by all supported versions of Lua. A specific version of Lua must be specified via the `-version` compiler switch or the `versions` DUB directive with the desired Lua version number. In this example, the Lua dynamic binding is compiled to support Lua 5.1 (note that version `0.1.0` as used here is just an example; please use the latest version in real code):
 
 __dub.json__
 ```
@@ -76,7 +76,7 @@ dependency "bindbc-lua" version="~>0.1.0"
 versions "LUA_51"
 ```
 
-With this example configuration, `luaSupport == LuaSupport.lua51`. If GLFW 5.1 is installed on the user's system, `loadLua` will return `LuaSupport.lua51`. If no compatible version of Lua is installed, `loadLua` will return `GLFWSupport.noLibrary`. The `bindbc-loader` always attempts to load shared libraries with a version number in the name. If the user attempts to load the Lua shared library via an alternative name, it is possible that the binding's configured version and the shared library's actual version do not match, in which case the return value will be `luaSupport.badLibrary`.
+With this example configuration, `luaSupport == LuaSupport.lua51`. If Lua 5.1 is installed on the user's system, `loadLua` will return `LuaSupport.lua51`. If no compatible version of Lua is installed, `loadLua` will return `LuaSupport.noLibrary`. The `bindbc-loader` always attempts to load shared libraries with a version number in the name. If the user attempts to load the Lua shared library via an alternative name, it is possible that the binding's configured version and the shared library's actual version do not match, in which case the return value will be `luaSupport.badLibrary`.
 
 The global property `loadedLuaVersion` is an alternative means of testing the result of `loadLua`. With other BindBC bindings, it is possible to load a lower version of a library than the one the binding was configured to load, in which case the global property will indicate the loaded version when the loader returns `badLibrary`. This is not possible in `bindbc-lua`. `loadedLuaVersion` is set to `luaSupport.noLibrary` before `loadLua` is called. When the function returns, `loadedLuaVersion` will be set to the same value as its return value.
 
@@ -89,6 +89,7 @@ Following are the supported versions of Lua, the corresponding version IDs to pa
 |Lua 5.1             | LUA_51           | `LuaSupport.lua51`  |
 |Lua 5.2             | LUA_52           | `LuaSupport.lua52`  |
 |Lua 5.3             | LUA_53           | `LuaSupport.lua53`  |
+|Lua 5.4             | LUA_54           | `LuaSupport.lua54`  |
 
 ## The static binding
 The static binding has a link-time dependency on either the shared or the static Lua library. On Windows, you can link with the static library or, to use the shared library with the import library. On other systems, you can link with either the static library or directly with the shared library. This requires the Lua development package be installed on your system at compile time, either by compiling the Lua source yourself, downloading the Lua precompiled binaries for Windows, or installing via a system package manager.
@@ -121,7 +122,7 @@ libs "lua5.1"
 ```
 
 ### Via DUB subconfigurations
-Instead of using DUB's `versions` directive, a `subConfiguration` can be used. Enable the `static` subconfiguration for the `bindbc-lua` dependency:
+Instead of using DUB's `versions` directive, a `subConfiguration` can be used. Enable the `static` subconfiguration for the `bindbc-lua` dependency (note that version `0.1.0` as used here is just an example; please use the latest version in real code):
 
 __dub.json__
 ```
@@ -147,7 +148,7 @@ This has the benefit that it completely excludes from the build any source modul
 
 ## `betterC` support
 
-`betterC` support is enabled via the `dynamicBC` and `staticBC` subconfigurations, for dynamic and static bindings respectively. To enable the static binding with `-betterC` support:
+`betterC` support is enabled via the `dynamicBC` and `staticBC` subconfigurations, for dynamic and static bindings respectively. To enable the static binding with `-betterC` support (note that version `0.1.0` as used here is just an example; please use the latest version in real code):
 
 __dub.json__
 ```
@@ -163,7 +164,7 @@ __dub.json__
 
 __dub.sdl__
 ```
-dependency "bindbc-lua" version="~>0.5.0"
+dependency "bindbc-lua" version="~>0.1.0"
 subConfiguration "bindbc-lua" "staticBC"
 versions "LUA_51"
 libs "lua5.1"

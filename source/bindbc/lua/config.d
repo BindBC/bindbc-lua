@@ -12,14 +12,18 @@ enum LuaSupport {
     lua51 = 51,
     lua52 = 52,
     lua53 = 53,
+    lua54 = 54,
 }
 
-version(LUA_51) {
-    enum luaSupport = LuaSupport.lua51;
+version(LUA_54) {
+    enum luaSupport = LuaSupport.lua54;
 }
-version(LUA_52) {
+else version(LUA_53) {
+    enum luaSupport = LuaSupport.lua53;
+}
+else version(LUA_52) {
     enum luaSupport = LuaSupport.lua52;
 }
-version(LUA_53) {
-    enum luaSupport = LuaSupport.lua53;
+else version(LUA_51) {
+    enum luaSupport = LuaSupport.lua51;
 }
