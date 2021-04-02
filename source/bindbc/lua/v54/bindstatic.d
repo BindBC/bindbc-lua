@@ -119,7 +119,7 @@ extern(C) @nogc nothrow:
     void lua_createtable(lua_State* L, int narr, int nrec);
     void* lua_newuserdatauv(lua_State* L, size_t sz, int nuvalue);
     int lua_getmetatable(lua_State* L, int objindex);
-    void lua_getiuservalue(lua_State* L, int idx, int n);
+    int lua_getiuservalue(lua_State* L, int idx, int n);
     void lua_setglobal(lua_State* L, const(char)* name);
     void lua_settable(lua_State* L, int idx);
     void lua_setfield(lua_State* L, int idx, const(char)* k);
