@@ -68,7 +68,7 @@ enum LUA_ERRERR = 5;
 
 struct lua_State;
 
-nothrow {
+extern(C) nothrow {
     alias lua_CFunction = int function(lua_State*);
     alias lua_Reader = const(char)* function(lua_State*,void*,size_t);
     alias lua_Writer = int function(lua_State*,const(void)*,size_t,void*);
