@@ -70,7 +70,7 @@ struct lua_State;
 
 extern(C) nothrow {
     alias lua_CFunction = int function(lua_State*);
-    alias lua_Reader = const(char)* function(lua_State*,void*,size_t);
+    alias lua_Reader = const(char)* function(lua_State*,void*,size_t*);
     alias lua_Writer = int function(lua_State*,const(void)*,size_t,void*);
     alias lua_Alloc = void* function(void*,void*,size_t,size_t);
 }

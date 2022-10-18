@@ -121,7 +121,7 @@ struct lua_State;
 extern(C) nothrow {
     alias lua_CFunction = int function(lua_State* L);
     alias lua_KFunction = int function(lua_State* L, int status, lua_KContext ctx);
-    alias lua_Reader = const(char)* function(lua_State* L, void* ud, size_t sz);
+    alias lua_Reader = const(char)* function(lua_State* L, void* ud, size_t* sz);
     alias lua_Writer = int function(lua_State* L, const(void)* p, size_t sz, void* ud);
     alias lua_Alloc = void* function(void* ud, void* ptr, size_t osize, size_t nsize);
     alias lua_WarnFunction = void function(void* ud, const(char)* msg, int tocont);
