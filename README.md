@@ -1,23 +1,23 @@
 # bindbc-lua
-This project provides both static and dynamic bindings to the C API of [Lua programming language](https://www.lua.org/). The bindings are `@nogc` and `nothrow` compatible and can be compiled for compatibility with `-betterC`. This package is intended as a replacement of [DerelictLua](https://github.com/DerelictOrg/DerelictLua), which is not compatible with `@nogc`,  `nothrow`, or `-betterC`.
+This project provides both static and dynamic bindings to the C API of [Lua programming language](https://www.lua.org/). The bindings are `@nogc` and `nothrow` compatible and can be compiled for compatibility with BetterC. This package is intended as a replacement of [DerelictLua](https://github.com/DerelictOrg/DerelictLua), which is not compatible with `@nogc`,  `nothrow`, or BetterC.
 
 ## Usage
-By default, `bindbc-lua` is configured to compile as a dynamic binding that is not `-betterC` compatible. The dynamic binding has no link-time dependency on the Lua library, so the Lua shared library must be manually loaded at runtime. When configured as a static binding, there is a link-time dependency on the lua library through either the static library or the appropriate file for linking with shared libraries on your platform (see below).
+By default, `bindbc-lua` is configured to compile as a dynamic binding that is not BetterC compatible. The dynamic binding has no link-time dependency on the Lua library, so the Lua shared library must be manually loaded at runtime. When configured as a static binding, there is a link-time dependency on the lua library through either the static library or the appropriate file for linking with shared libraries on your platform (see below).
 
-When using DUB to manage your project, the static binding can be enabled via a DUB `subConfiguration` statement in your project's package file. `-betterC` compatibility is also enabled via subconfigurations.
+When using DUB to manage your project, the static binding can be enabled via a DUB `subConfiguration` statement in your project's package file. BetterC compatibility is also enabled via subconfigurations.
 
-To use Lua, add `bindbc-lua` as a dependency to your project's package config file. For example, the following is configured to use Lua as a dynamic binding that is not `-betterC` compatible (note that version `0.1.0` as used here is just an example; please use the latest version in real code):
+To use Lua, add `bindbc-lua` as a dependency to your project's package config file. For example, the following is configured to use Lua as a dynamic binding that is not BetterC compatible:
 
 __dub.json__
 ```
 dependencies {
-    "bindbc-lua": "~>0.1.0",
+    "bindbc-lua": "~>0.6.0",
 }
 ```
 
 __dub.sdl__
 ```
-dependency "bindbc-lua" version="~>0.1.0"
+dependency "bindbc-lua" version="~>0.6.0"
 ```
 
 ### The dynamic binding
@@ -60,19 +60,19 @@ to the executable, only on Windows.
 */
 // version(Windows) loadLua("libs/lua51.dll")
 ```
-Because of the number of changes to Lua's C API between releases, `bindbc-lua` does not attempt to load any version by default as there is no version of the API that is shared by all supported versions of Lua. A specific version of Lua must be specified via the `-version` compiler switch or the `versions` DUB directive with the desired Lua version number. In this example, the Lua dynamic binding is compiled to support Lua 5.1 (note that version `0.1.0` as used here is just an example; please use the latest version in real code):
+Because of the number of changes to Lua's C API between releases, `bindbc-lua` does not attempt to load any version by default as there is no version of the API that is shared by all supported versions of Lua. A specific version of Lua must be specified via the `-version` compiler switch or the `versions` DUB directive with the desired Lua version number. In this example, the Lua dynamic binding is compiled to support Lua 5.1:
 
 __dub.json__
 ```
 "dependencies": {
-    "bindbc-lua": "~>0.1.0"
+    "bindbc-lua": "~>0.6.0"
 },
 "versions": ["LUA_51"]
 ```
 
 __dub.sdl__
 ```
-dependency "bindbc-lua" version="~>0.1.0"
+dependency "bindbc-lua" version="~>0.6.0"
 versions "LUA_51"
 ```
 
@@ -108,7 +108,7 @@ When using DUB, its `versions` directive is an option. For example, when using t
 __dub.json__
 ```
 "dependencies": {
-    "bindbc-lua": "~>0.1.0"
+    "bindbc-lua": "~>0.6.0"
 },
 "versions": ["BindLua_Static", "LUA_51"],
 "libs": ["lua5.1"]
@@ -116,18 +116,18 @@ __dub.json__
 
 __dub.sdl__
 ```
-dependency "bindbc-lua" version="~>0.1.0"
+dependency "bindbc-lua" version="~>0.6.0"
 versions "BindLua_Static" "LUA_5.1"
 libs "lua5.1"
 ```
 
 ### Via DUB subconfigurations
-Instead of using DUB's `versions` directive, a `subConfiguration` can be used. Enable the `static` subconfiguration for the `bindbc-lua` dependency (note that version `0.1.0` as used here is just an example; please use the latest version in real code):
+Instead of using DUB's `versions` directive, a `subConfiguration` can be used. Enable the `static` subconfiguration for the `bindbc-lua` dependency:
 
 __dub.json__
 ```
 "dependencies": {
-    "bindbc-lua": "~>0.1.0"
+    "bindbc-lua": "~>0.6.0"
 },
 "subConfigurations": {
     "bindbc-lua": "static"
@@ -138,22 +138,22 @@ __dub.json__
 
 __dub.sdl__
 ```
-dependency "bindbc-lua" version="~>0.1.0"
+dependency "bindbc-lua" version="~>0.6.0"
 subConfiguration "bindbc-lua" "static"
 versions "LUA_51"
 libs "lua5.1"
 ```
 
-This has the benefit that it completely excludes from the build any source modules related to the dynamic binding, i.e. they will never be passed to the compiler.
+This has the benefit that it completely excludes from the build any source modules related to the dynamic binding. (i.e. they will never be passed to the compiler)
 
-## `betterC` support
+## betterc support
 
-`betterC` support is enabled via the `dynamicBC` and `staticBC` subconfigurations, for dynamic and static bindings respectively. To enable the static binding with `-betterC` support (note that version `0.1.0` as used here is just an example; please use the latest version in real code):
+betterc support is enabled via the `dynamicBC` and `staticBC` subconfigurations, for dynamic and static bindings respectively. To enable the static binding with BetterC support:
 
 __dub.json__
 ```
 "dependencies": {
-    "bindbc-lua": "~>0.1.0"
+    "bindbc-lua": "~>0.6.0"
 },
 "subConfigurations": {
     "bindbc-lua": "staticBC"
@@ -164,10 +164,10 @@ __dub.json__
 
 __dub.sdl__
 ```
-dependency "bindbc-lua" version="~>0.1.0"
+dependency "bindbc-lua" version="~>0.6.0"
 subConfiguration "bindbc-lua" "staticBC"
 versions "LUA_51"
 libs "lua5.1"
 ```
 
-When not using DUB to manage your project, first use DUB to compile the BindBC libraries with the `dynamicBC` or `staticBC` configuration, then pass `-betterC` to the compiler when building your project.
+When not using DUB to manage your project, first use DUB to compile the BindBC libraries with the `dynamicBC` or `staticBC` configuration, then pass BetterC to the compiler when building your project.
