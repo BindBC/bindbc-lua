@@ -1,14 +1,15 @@
-
-//          Copyright 2019 - 2021 Michael D. Parker
-// Distributed under the Boost Software License, Version 1.0.
-//    (See accompanying file LICENSE_1_0.txt or copy at
-//          http://www.boost.org/LICENSE_1_0.txt)
-
+/+
++                Copyright 2023 Aya Partridge
++          Copyright 2019 - 2021 Michael D. Parker
++ Distributed under the Boost Software License, Version 1.0.
++     (See accompanying file LICENSE_1_0.txt or copy at
++           http://www.boost.org/LICENSE_1_0.txt)
++/
 module bindbc.lua.v51.types;
 
 version(LUA_51):
 
-import core.stdc.stdio : BUFSIZ;
+import core.stdc.stdio: BUFSIZ;
 
 // luaconf.h
 enum LUA_IDSIZE = 60;
@@ -27,19 +28,19 @@ enum LUAI_MAXSTACK = 1000000;
 // lauxlib.h
 enum LUA_ERRFILE = LUA_ERRERR+1;
 
-struct luaL_Reg {
-    const(char)* name;
-    lua_CFunction func;
+struct luaL_Reg{
+	const(char)* name;
+	lua_CFunction func;
 }
 
 enum LUA_NOREF = -2;
 enum LUA_REFNIL = -1;
 
-struct luaL_Buffer {
-    char* p;
-    int lvl;
-    lua_State* L;
-    char[LUAL_BUFFERSIZE] buffer;
+struct luaL_Buffer{
+	char* p;
+	int lvl;
+	lua_State* L;
+	char[LUAL_BUFFERSIZE] buffer;
 }
 
 // lua.h
@@ -68,11 +69,11 @@ enum LUA_ERRERR = 5;
 
 struct lua_State;
 
-extern(C) nothrow {
-    alias lua_CFunction = int function(lua_State*);
-    alias lua_Reader = const(char)* function(lua_State*,void*,size_t*);
-    alias lua_Writer = int function(lua_State*,const(void)*,size_t,void*);
-    alias lua_Alloc = void* function(void*,void*,size_t,size_t);
+extern(C) nothrow{
+	alias lua_CFunction = int function(lua_State*);
+	alias lua_Reader = const(char)* function(lua_State*, void*, size_t*);
+	alias lua_Writer = int function(lua_State*, const(void)*, size_t, void*);
+	alias lua_Alloc = void* function(void*, void*, size_t, size_t);
 }
 
 enum LUA_TNONE = -1;
@@ -111,21 +112,21 @@ enum LUA_MASKRET = 1 << LUA_HOOKRET;
 enum LUA_MASKLINE = 1 << LUA_HOOKLINE;
 enum LUA_MASKCOUNT = 1 << LUA_HOOKCOUNT;
 
-struct lua_Debug {
-    int event;
-    const(char)* name;
-    const(char)* namewhat;
-    const(char)* what;
-    const(char)* source;
-    int currentline;
-    int nups;
-    int linedefined;
-    int lastlinedefined;
-    char[LUA_IDSIZE] short_src;
-    private int i_ci;
+struct lua_Debug{
+	int event;
+	const(char)* name;
+	const(char)* namewhat;
+	const(char)* what;
+	const(char)* source;
+	int currentline;
+	int nups;
+	int linedefined;
+	int lastlinedefined;
+	char[LUA_IDSIZE] short_src;
+	private int i_ci;
 }
 
-alias lua_Hook = void function(lua_State*,lua_Debug*) nothrow;
+alias lua_Hook = extern(C) void function(lua_State*, lua_Debug*) nothrow;
 
 // lualib.h
 enum LUA_FILEHANDLE = "FILE*";
