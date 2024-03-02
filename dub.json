@@ -1,0 +1,39 @@
+{
+	"name": "bindbc-lua",
+	"description": "Static & dynamic bindings to Lua 4.0–5.4, compatible with BetterC, @nogc, and nothrow.",
+	"authors": ["Aya Partridge", "Mike Parker"],
+	"license": "BSL-1.0",
+	
+	"dependencies": {"bindbc-common": "~>0.1.1"},
+	"targetType": "staticLibrary",
+	"targetPath": "lib",
+	"targetName": "BindBC_Lua",
+	
+	"configurations": [
+		{
+			"name": "dynamic",
+			"dependencies": {"bindbc-loader": "~>1.1.0"},
+		},
+		{
+			"name": "dynamicBC",
+			"dependencies": {"bindbc-loader": "~>1.1.0"},
+			"subConfigurations": {
+				"bindbc-loader": "yesBC",
+				"bindbc-common": "yesBC",
+			},
+			"buildOptions": ["betterC"],
+		},
+		{
+			"name": "static",
+			"versions": ["BindLua_Static"],
+		},
+		{
+			"name": "staticBC",
+			"subConfigurations": {
+				"bindbc-common": "yesBC",
+			},
+			"buildOptions": ["betterC"],
+			"versions": ["BindLua_Static"],
+		}
+	],
+}

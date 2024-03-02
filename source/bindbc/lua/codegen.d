@@ -4,7 +4,9 @@
 +     (See accompanying file LICENSE_1_0.txt or copy at
 +           http://www.boost.org/LICENSE_1_0.txt)
 +/
-module bindbc.lua;
+module bindbc.lua.codegen;
 
-public import bindbc.lua.config;
-public import lua;
+import bindbc.lua.config;
+import bindbc.common.codegen;
+
+mixin(makeFnBindFns(staticBinding, Version(0,1,1)));
